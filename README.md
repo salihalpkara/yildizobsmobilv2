@@ -2,7 +2,7 @@
 
 ## EN
 
-This application is the improved version of my previous project [Yildiz OBS Mobile](https://github.com/salihalpkara/yildizobsmobil/). Yildiz OBS Mobile v2 provides a one-click-login experience for both E-Government and OBS login methods.
+This application is the improved version of my previous project [Yıldız OBS Mobile](https://github.com/salihalpkara/yildizobsmobil/). Yildiz OBS Mobile v2 provides a one-click-login experience for both E-Government and OBS login methods.
 
 During the onboarding setup screen, the application prompts the student to select their preferred login method (E-Government login or OBS login). Subsequently, the application requests the necessary information based on the chosen login method. Once the required information which will be stored locally on the student's device is provided, they can opt to set up biometric authentication, adding an extra layer of protection. Consequently, the app will require biometric authentication for every login attempt.
 
