@@ -92,7 +92,6 @@ class _ClassicLoginOBSPageState extends State<ClassicLoginOBSPage> with TickerPr
     image = img.contrast(image, contrast: 800);
 
 
-
     // Save image
     File(imagePath).writeAsBytesSync(img.encodePng(image));
 
