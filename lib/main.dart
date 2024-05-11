@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yildiz_obs_mobile/screens/login_screen.dart';
 import 'package:yildiz_obs_mobile/screens/obs_fast_login_screen.dart';
@@ -47,6 +48,7 @@ class YildizOBSMobil extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: skipSetup ? const LoginPage(justLoggedOut: false,) : const OnboardingPage(),
       theme: ThemeData(
+        textTheme: GoogleFonts.lexendTextTheme(Theme.of(context).textTheme),
         colorScheme: const ColorScheme(
           brightness: Brightness.dark,
           primary: Color(0xFFBAC3FF),

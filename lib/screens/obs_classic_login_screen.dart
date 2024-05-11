@@ -20,7 +20,7 @@ class ClassicLoginOBSPage extends StatefulWidget {
   State<ClassicLoginOBSPage> createState() => _ClassicLoginOBSPageState();
 }
 
-class _ClassicLoginOBSPageState extends State<ClassicLoginOBSPage> {
+class _ClassicLoginOBSPageState extends State<ClassicLoginOBSPage> with TickerProviderStateMixin{
   late InAppWebViewController webViewController;
   InAppWebViewSettings settings = InAppWebViewSettings();
   final secCodeController = TextEditingController();
@@ -28,7 +28,7 @@ class _ClassicLoginOBSPageState extends State<ClassicLoginOBSPage> {
   late String userOBSPassword = "";
   ConnectivityResult? connection;
   DateTime timeBackPressed = DateTime.now();
-  String OBSLoginLink = "https://obs.yildiz.edu.tr/oibs/ogrenci/login.aspx";
+  String OBSLoginLink = "https://obs.yildiz.edu.tr/oibs/std/login.aspx";
   String scannedText = "";
   String secCode = "";
   int secCodeAnswer = 0;
@@ -380,6 +380,10 @@ class _ClassicLoginOBSPageState extends State<ClassicLoginOBSPage> {
                               setState(() {
                                 webViewVisibility = true;
                               });
+                            }
+                            if(consoleMessage.contains("Kullanıcı adı veya şifresi geçersiz.")){
+                              appNavigator.currentState?.popAndPushNamed("/login-justLoggedOut");
+                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(backgroundColor:Color(0xFF93000A), content: Text("Kullanıcı adı veya şifresi geçersiz.", style: TextStyle(color: Colors.white),)));
                             }
                             if (consoleMessage.contains("captchaImg height:")) {
                               setState(() {

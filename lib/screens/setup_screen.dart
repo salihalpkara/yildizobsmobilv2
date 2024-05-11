@@ -403,7 +403,7 @@ class _SetupPageState extends State<SetupPage> {
                             scrollPadding: EdgeInsets.only(
                                 bottom:
                                 MediaQuery.of(context).viewInsets.bottom),
-                            keyboardType: TextInputType.number,
+                            keyboardType: TextInputType.text,
                             validator: (username) {
                               if (username!.isEmpty) {
                                 return "Bu alan boş bırakılamaz";

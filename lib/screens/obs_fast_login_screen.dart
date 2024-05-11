@@ -23,7 +23,7 @@ class _FastLoginOBSPageState extends State<FastLoginOBSPage> {
   late String userOBSPassword = "";
   ConnectivityResult? connection;
   DateTime timeBackPressed = DateTime.now();
-  String OBSLoginLink = "https://obs.yildiz.edu.tr/oibs/ogrenci/login.aspx";
+  String OBSLoginLink = "https://obs.yildiz.edu.tr/oibs/std/login.aspx";
   bool webViewVisibility = false;
   bool isLoggedIn = false;
   bool showGoBack = false;
@@ -213,7 +213,7 @@ class _FastLoginOBSPageState extends State<FastLoginOBSPage> {
                             showGoBack
                                 ? const Text(
                                 "Tahmin edilenden uzun sürmeye başladı...")
-                                : const Text("Hızlı giriş yapılıyor..."),
+                                : const Text("E-Devlet bilgileri ile giriş yapılıyor..."),
                             const SizedBox(
                               width: 10,
                             ),
