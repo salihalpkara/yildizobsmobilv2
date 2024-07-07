@@ -91,7 +91,6 @@ class _FastLoginOBSPageState extends State<FastLoginOBSPage> {
               OBSLogout();
               return false;
             }
-
           }
         },
         child: Scaffold(
