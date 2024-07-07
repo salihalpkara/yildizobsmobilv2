@@ -359,94 +359,101 @@ class _ClassicLoginOBSPageState extends State<ClassicLoginOBSPage> with TickerPr
                 children: [
                   RefreshIndicator(
                     onRefresh: () async {webViewController.evaluateJavascript(source: "window.location.reload();");},
-                    child: SingleChildScrollView(
-                      child: SizedBox(
-                        height: isLoggedIn ? MediaQuery.of(context).size.height + 265 : obsSecCodeHeight,
-                        width: isLoggedIn ? MediaQuery.of(context).size.width : obsSecCodeWidth *2/3,
-                        child: InAppWebView(
-                          initialUrlRequest:
-                          URLRequest(url: WebUri(OBSLoginLink)),
-                          initialSettings: settings,
-                          onWebViewCreated: (InAppWebViewController controller) {
-                            webViewController = controller;
-                          },
-                          onConsoleMessage: (controller, message){
-                            String consoleMessage = message.message;
-                            if (kDebugMode) {
-                              print("console: $consoleMessage");
-                            }
-                            if (consoleMessage.contains("cannot be parsed, or is out of range")) {
-                              setState(() {
-                                webViewVisibility = true;
-                              });
-                            }
-                            if(consoleMessage.contains("Kullanıcı adı veya şifresi geçersiz.")){
-                              appNavigator.currentState?.popAndPushNamed("/login-justLoggedOut");
-                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(backgroundColor:Color(0xFF93000A), content: Text("Kullanıcı adı veya şifresi geçersiz.", style: TextStyle(color: Colors.white),)));
-                            }
-                            if (consoleMessage.contains("captchaImg height:")) {
-                              setState(() {
-                                obsSecCodeHeight = double.parse(consoleMessage.split(":")[1]);
-                              });
-                            }
-                            if (consoleMessage.contains("captchaImg width:")) {
-                              setState(() {
-                                obsSecCodeWidth = double.parse(consoleMessage.split(":")[1]);
-                              });
-                            }
-                            if (consoleMessage.contains("User just logged out.")) {
-                              OBSLogout();
-                            }
-                            if (consoleMessage.contains("Oturum Sonlandı")){
-                              setState(() {
-                                isLoggedIn = false;
-                                webViewVisibility = false;
-                              });
-                            }
-
-                          },
-                          onLoadStop: (controller, url) async {
-                            webViewController.evaluateJavascript(source: "console.log(document.body.innerText);");
-                            String currentUrl = url.toString();
-                            if(currentUrl == OBSLoginLink){
-                              setState(() {
-                                isLoggedIn = false;
-                              });
-                              String sonuc = await controller.evaluateJavascript(source: "document.getElementById('lblSonuclar').innerHTML;") as String;
-                              if (sonuc == 'UYARI!! Aynı tarayıcıdan birden fazla giriş yapılamaz. Lütfen tüm açık tarayıcıları kapatın ve tarayıcınızı yeniden başlatın.') {
-                                webViewController.evaluateJavascript(source: 'document.querySelector("#btnRefresh").click();');
-                              } else {
+                    child: Expanded(
+                      child: ListView(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemExtent: isLoggedIn? MediaQuery.of(context).size.height: obsSecCodeHeight,
+                        children: [
+                          SizedBox(
+                            height: isLoggedIn ? double.infinity : obsSecCodeHeight,
+                            width: isLoggedIn ? MediaQuery.of(context).size.width : obsSecCodeWidth *2/3,
+                            child: InAppWebView(
+                              initialUrlRequest:
+                              URLRequest(url: WebUri(OBSLoginLink)),
+                              initialSettings: settings,
+                              onWebViewCreated: (InAppWebViewController controller) {
+                                webViewController = controller;
+                              },
+                              onConsoleMessage: (controller, message){
+                                String consoleMessage = message.message;
                                 if (kDebugMode) {
-                                  print(sonuc);
+                                  print("console: $consoleMessage");
                                 }
-                              }
+                                if (consoleMessage.contains("cannot be parsed, or is out of range")) {
+                                  setState(() {
+                                    webViewVisibility = true;
+                                  });
+                                }
+                                if(consoleMessage.contains("Kullanıcı adı veya şifresi geçersiz.")){
+                                  appNavigator.currentState?.popAndPushNamed("/login-justLoggedOut");
+                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(backgroundColor:Color(0xFF93000A), content: Text("Kullanıcı adı veya şifresi geçersiz.", style: TextStyle(color: Colors.white),)));
+                                }
+                                if (consoleMessage.contains("captchaImg height:")) {
+                                  setState(() {
+                                    obsSecCodeHeight = double.parse(consoleMessage.split(":")[1]);
+                                  });
+                                }
+                                if (consoleMessage.contains("captchaImg width:")) {
+                                  setState(() {
+                                    obsSecCodeWidth = double.parse(consoleMessage.split(":")[1]);
+                                  });
+                                }
+                                if (consoleMessage.contains("User just logged out.")) {
+                                  OBSLogout();
+                                }
+                                if (consoleMessage.contains("Oturum Sonlandı")){
+                                  setState(() {
+                                    isLoggedIn = false;
+                                    webViewVisibility = false;
+                                  });
+                                }
 
-                              webViewController.evaluateJavascript(source: "var imgCaptchaImg = document.getElementById('imgCaptchaImg'); document.body.appendChild(imgCaptchaImg); imgCaptchaImg.style.width = 'auto';imgCaptchaImg.style.height = 'auto';document.getElementById('form1').style.display = 'none';document.getElementById('imgCaptchaImg').onclick = '';");
-                              webViewController.evaluateJavascript(source: "document.getElementById('txtParamT01').value = '$userOBSUsername';");
-                              webViewController.evaluateJavascript(source: "document.getElementById('txtParamT02').value = '$userOBSPassword';");
-                              webViewController.evaluateJavascript(source: "console.log('capthaImg height: ' + document.getElementById('imgCaptchaImg').getBoundingClientRect().height);");
-                              webViewController.evaluateJavascript(source: "console.log('capthaImg width: ' + document.getElementById('imgCaptchaImg').getBoundingClientRect().width);");
+                              },
+                              onLoadStop: (controller, url) async {
+                                webViewController.evaluateJavascript(source: "console.log(document.body.innerText);");
+                                String currentUrl = url.toString();
+                                if(currentUrl == OBSLoginLink){
+                                  setState(() {
+                                    isLoggedIn = false;
+                                  });
+                                  String sonuc = await controller.evaluateJavascript(source: "document.getElementById('lblSonuclar').innerHTML;") as String;
+                                  if (sonuc == 'UYARI!! Aynı tarayıcıdan birden fazla giriş yapılamaz. Lütfen tüm açık tarayıcıları kapatın ve tarayıcınızı yeniden başlatın.') {
+                                    webViewController.evaluateJavascript(source: 'document.querySelector("#btnRefresh").click();');
+                                  } else {
+                                    if (kDebugMode) {
+                                      print(sonuc);
+                                    }
+                                  }
+
+                                  webViewController.evaluateJavascript(source: "var imgCaptchaImg = document.getElementById('imgCaptchaImg'); document.body.appendChild(imgCaptchaImg); imgCaptchaImg.style.width = 'auto';imgCaptchaImg.style.height = 'auto';document.getElementById('form1').style.display = 'none';document.getElementById('imgCaptchaImg').onclick = '';");
+                                  webViewController.evaluateJavascript(source: "document.getElementById('txtParamT01').value = '$userOBSUsername';");
+                                  webViewController.evaluateJavascript(source: "document.getElementById('txtParamT02').value = '$userOBSPassword';");
+                                  webViewController.evaluateJavascript(source: "console.log('capthaImg height: ' + document.getElementById('imgCaptchaImg').getBoundingClientRect().height);");
+                                  webViewController.evaluateJavascript(source: "console.log('capthaImg width: ' + document.getElementById('imgCaptchaImg').getBoundingClientRect().width);");
 
 
-                              Future.delayed(const Duration(milliseconds: 500), () async {
-                                webViewController.scrollTo(x: 0, y: 0);
-                                screenshotBytes = (await webViewController.takeScreenshot())!;
-                                final dir = (await getTemporaryDirectory()).path;
-                                final imageFile = File('$dir/a.png')..writeAsBytesSync(screenshotBytes);
-                                getRecognizedText(imageFile);
-                              });
+                                  Future.delayed(const Duration(milliseconds: 500), () async {
+                                    webViewController.scrollTo(x: 0, y: 0);
+                                    screenshotBytes = (await webViewController.takeScreenshot())!;
+                                    final dir = (await getTemporaryDirectory()).path;
+                                    final imageFile = File('$dir/a.png')..writeAsBytesSync(screenshotBytes);
+                                    getRecognizedText(imageFile);
+                                  });
 
-                            } else {
-                              webViewController.zoomBy(zoomFactor: 0.05);
-                              webViewController.evaluateJavascript(source: '''document.querySelector('#btnLogout').href = "javascript:__doPostBack('btnLogout','');console.log('User just logged out.');"''');
+                                } else {
+                                  webViewController.zoomBy(zoomFactor: 0.05);
+                                  webViewController.evaluateJavascript(source: '''document.querySelector('#btnLogout').href = "javascript:__doPostBack('btnLogout','');console.log('User just logged out.');"''');
 
-                                setState(() {
-                                  isLoggedIn = true;
-                                });
+                                    setState(() {
+                                      isLoggedIn = true;
+                                    });
 
-                            }
-                          },
-                        ),
+                                }
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
