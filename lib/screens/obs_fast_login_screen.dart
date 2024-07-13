@@ -8,7 +8,6 @@ import "package:yildiz_obs_mobile/main.dart";
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
-
 class FastLoginOBSPage extends StatefulWidget {
   const FastLoginOBSPage({super.key});
   @override
@@ -30,6 +29,7 @@ class _FastLoginOBSPageState extends State<FastLoginOBSPage> {
   int loginSteps = 0;
   int navBarSelectedIndex = 2;
   bool userPrefersFastLogin = true;
+  PullToRefreshController? refreshController;
 
   Future<void> init() async {
     final String tckn = await UserPreferences.getTCKN();
@@ -43,8 +43,6 @@ class _FastLoginOBSPageState extends State<FastLoginOBSPage> {
       usereDevletPassword = eDevletPassword;
       userPrefersFastLogin = prefersFastLogin;
     });
-
-
   }
 
   @override
@@ -55,14 +53,22 @@ class _FastLoginOBSPageState extends State<FastLoginOBSPage> {
       });
     });
     init();
-
     super.initState();
+    refreshController = PullToRefreshController(
+        onRefresh: () {
+          webViewController.evaluateJavascript(
+              source: "window.location.reload();");
+        },
+        settings: PullToRefreshSettings(
+          color: Colors.blue,
+          backgroundColor: Colors.white,
+        ));
   }
 
   void OBSLogout() {
-    webViewController.evaluateJavascript(source:"__doPostBack('btnLogout','');");
-      appNavigator.currentState?.pushReplacementNamed("/login-justLoggedOut");
-
+    webViewController.evaluateJavascript(
+        source: "__doPostBack('btnLogout','');");
+    appNavigator.currentState?.pushReplacementNamed("/login-justLoggedOut");
   }
 
   @override
@@ -105,102 +111,105 @@ class _FastLoginOBSPageState extends State<FastLoginOBSPage> {
                   ),
                 )
               : null,
-          extendBody: true,
+          extendBody: false,
           bottomNavigationBar: Visibility(
             visible: isLoggedIn,
-            child: ClipRRect(
-              borderRadius: const BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20)),
-              child: NavigationBarTheme(
-                data: NavigationBarThemeData(
-                    labelTextStyle: MaterialStateProperty.all<TextStyle>(
-                        Theme.of(context).textTheme.labelMedium!)),
-                child: NavigationBar(
-                  elevation: 0,
-                  height: 80,
-                  onDestinationSelected: (int newIndex) {
-                    setState(() {
-                      navBarSelectedIndex = newIndex;
-                    });
-                    switch (newIndex) {
-                      case 0:
-                        webViewController.evaluateJavascript(source:
-                            "menu_close(this,'start.aspx?gkm=00233219833291388643775636606311143523032194333453444836720385043439638936355703756034388388243330337427341963524535260');");
+            child: NavigationBarTheme(
+              data: NavigationBarThemeData(
+                  backgroundColor: Color(0xFF121e2d),
+                  labelTextStyle: WidgetStateProperty.all<TextStyle>(
+                      Theme.of(context).textTheme.labelMedium!)),
+              child: NavigationBar(
+                elevation: 0,
+                height: 80,
+                onDestinationSelected: (int newIndex) {
+                  setState(() {
+                    navBarSelectedIndex = newIndex;
+                  });
+                  switch (newIndex) {
+                    case 0:
+                      webViewController.evaluateJavascript(
+                          source:
+                              "menu_close(this,'start.aspx?gkm=00233219833291388643775636606311143523032194333453444836720385043439638936355703756034388388243330337427341963524535260');");
 
-                        break;
-                      case 1:
-                        webViewController.evaluateJavascript(source:
-                            "menu_close(this,'start.aspx?gkm=00233219833291388643775636606311143523032194333453444836720385043439638936355703756034388388243330337427341963524035280');");
-                        break;
-                      case 2:
-                        webViewController.evaluateJavascript(source:"__doPostBack('','');");
-                        break;
-                      case 3:
-                        webViewController.evaluateJavascript(source:
-                            "menu_close(this,'start.aspx?gkm=00233219833291388643775636606311143523032194333453444836720385043439638936355703756034388388243330337427341963524035275');");
-                        break;
-                      case 4:
-                        Navigator.pushNamed(context, "/setup-loggedIn");
-                        break;
-                    }
-                  },
-                  selectedIndex: navBarSelectedIndex,
-                  labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-                  destinations: const [
-                    NavigationDestination(
-                      icon: Icon(Icons.mail),
-                      label: "Gelen\nMesajlar",
-                    ),
-                    NavigationDestination(
-                      icon: Icon(Icons.calendar_month),
-                      label: "Ders Programı",
-                    ),
-                    NavigationDestination(
-                      icon: Icon(Icons.home_rounded),
-                      label: "Ana Sayfa",
-                    ),
-                    NavigationDestination(
-                      icon: Icon(Icons.note_alt_outlined),
-                      label: "Not Listesi",
-                    ),
-                    NavigationDestination(
-                        icon: Icon(Icons.settings), label: "Ayarlar"),
-                  ],
-                ),
+                      break;
+                    case 1:
+                      webViewController.evaluateJavascript(
+                          source:
+                              "menu_close(this,'start.aspx?gkm=00233219833291388643775636606311143523032194333453444836720385043439638936355703756034388388243330337427341963524035280');");
+                      break;
+                    case 2:
+                      webViewController.evaluateJavascript(
+                          source: "__doPostBack('','');");
+                      break;
+                    case 3:
+                      webViewController.evaluateJavascript(
+                          source:
+                              "menu_close(this,'start.aspx?gkm=00233219833291388643775636606311143523032194333453444836720385043439638936355703756034388388243330337427341963524035275');");
+                      break;
+                    case 4:
+                      Navigator.pushNamed(context, "/setup-loggedIn");
+                      break;
+                  }
+                },
+                selectedIndex: navBarSelectedIndex,
+                labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+                destinations: const [
+                  NavigationDestination(
+                    icon: Icon(Icons.mail),
+                    label: "  Gelen\nMesajlar",
+                  ),
+                  NavigationDestination(
+                    icon: Icon(Icons.calendar_month),
+                    label: "    Ders\nProgramı",
+                  ),
+                  NavigationDestination(
+                    icon: Icon(Icons.home_rounded),
+                    label: "Ana Sayfa\n",
+                  ),
+                  NavigationDestination(
+                    icon: Icon(Icons.note_alt_outlined),
+                    label: "  Not\nListesi",
+                  ),
+                  NavigationDestination(
+                      icon: Icon(Icons.settings), label: "Ayarlar\n"),
+                ],
               ),
             ),
           ),
-          body: Center(child: SafeArea(
+          body: Center(
+              child: SafeArea(
             bottom: false,
             child: Stack(
               children: [
-                Builder(builder: (BuildContext context){
+                Builder(builder: (BuildContext context) {
                   if (connection == ConnectivityResult.none) {
                     return Center(
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Icons.wifi_off_rounded,
-                              size: 60,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            const Text(
-                              "Ağ bağlantısı yok",
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            FilledButton.icon(
-                                onPressed: () {
-                                  appNavigator.currentState
-                                      ?.pushReplacementNamed("/obs-fast");
-                                },
-                                icon: const Icon(Icons.refresh),
-                                label: const Text("Tekrar dene"))
-                          ],
-                        ));
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.wifi_off_rounded,
+                          size: 60,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const Text(
+                          "Ağ bağlantısı yok",
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        FilledButton.icon(
+                            onPressed: () {
+                              appNavigator.currentState
+                                  ?.pushReplacementNamed("/obs-fast");
+                            },
+                            icon: const Icon(Icons.refresh),
+                            label: const Text("Tekrar dene"))
+                      ],
+                    ));
                   } else {
                     return Column(
                       mainAxisSize: MainAxisSize.max,
@@ -211,8 +220,9 @@ class _FastLoginOBSPageState extends State<FastLoginOBSPage> {
                           children: [
                             showGoBack
                                 ? const Text(
-                                "Tahmin edilenden uzun sürmeye başladı...")
-                                : const Text("E-Devlet bilgileri ile giriş yapılıyor..."),
+                                    "Tahmin edilenden uzun sürmeye başladı...")
+                                : const Text(
+                                    "E-Devlet bilgileri ile giriş yapılıyor..."),
                             const SizedBox(
                               width: 10,
                             ),
@@ -237,8 +247,8 @@ class _FastLoginOBSPageState extends State<FastLoginOBSPage> {
                                 ),
                                 OutlinedButton.icon(
                                   onPressed: () {
-                                    appNavigator.currentState
-                                        ?.popAndPushNamed("/login-justLoggedOut");
+                                    appNavigator.currentState?.popAndPushNamed(
+                                        "/login-justLoggedOut");
                                   },
                                   label: const Text("Geri dön"),
                                   icon: const Icon(Icons.arrow_back_rounded),
@@ -253,106 +263,116 @@ class _FastLoginOBSPageState extends State<FastLoginOBSPage> {
                 }),
                 Offstage(
                   offstage: !webViewVisibility,
-                  child: RefreshIndicator(onRefresh: () async { webViewController.evaluateJavascript(source:"window.location.reload();"); },
-                      child: Expanded(
-                        child: ListView(
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemExtent: MediaQuery.of(context).size.height,
-                          children: [
-                                  SizedBox(
-                              height: double.infinity,
-                              width: MediaQuery.of(context).size.width,
-                              child: InAppWebView(
-                                  initialUrlRequest: URLRequest(url: WebUri(OBSLoginLink)),
-                                  onWebViewCreated: (InAppWebViewController controller){webViewController = controller;},
-                                  onConsoleMessage: (controller, message){
-                                    String consoleMessage = message.message;
-                                    if (kDebugMode) {
-                                      print("console: $consoleMessage");
-                                    }
-                                    if (consoleMessage.contains("cannot be parsed, or is out of range")){
-                                      setState(() {
-                                        webViewVisibility = true;
-                                      });
-                                    }
-                                    if (consoleMessage.contains("User just logged out.")) {
-                                      OBSLogout();
-                                    }
-                                    if (consoleMessage.contains("Oturum Sonlandı")){
-                                      appNavigator.currentState
-                                          ?.pushReplacementNamed("/login-justLoggedOut");
-                                      setState(() {
-                                        isLoggedIn = false;
-                                        webViewVisibility = false;
-                                      });
-                                    }
-                                  },
-                                  onLoadStop: (controller, url){
-                                    String currentUrl = url.toString();
-                                    if (kDebugMode) {
-                                      print(currentUrl);
-                                    }
-                                    webViewController.evaluateJavascript(source: "console.log(document.body.innerText);");
-                                    if (mounted) {
-                                      if (kDebugMode) {
-                                        print(url);
-                                      }
-                                      if (loginSteps == 0 && currentUrl == OBSLoginLink) {
-                                        webViewController.evaluateJavascript(source:"__doPostBack('btnEdevletLogin','');");
-                                        if (kDebugMode) {
-                                          print("LOGINSTEPS: $loginSteps");
-                                        }
-                                        setState(() {
-                                          loginSteps++;
-                                        });
-                                      } else if (loginSteps <= 2 &&
-                                          currentUrl.contains("https://giris.turkiye.gov.tr")) {
-                                        webViewController.evaluateJavascript(source:
-                                            "document.getElementById('tridField').value = '$usertckn';");
-                                        webViewController.evaluateJavascript(source:
-                                            "document.getElementById('egpField').value = '$usereDevletPassword';");
-                                        webViewController.evaluateJavascript(source:
-                                            "document.getElementsByClassName('btn btn-send')[0].click();");
-                                        webViewController.evaluateJavascript(source:
-                                            "if(document.getElementsByClassName('alert error').length > 0){console.log('cannot be parsed, or is out of range')};");
-                                        if (kDebugMode) {
-                                          print("LOGINSTEPS: $loginSteps");
-                                        }
-                                        setState(() {
-                                          loginSteps++;
-                                        });
-                                      } else {
-                                        if (currentUrl.contains("https://obs.yildiz.edu.tr/")) {
-                                          setState(() {
-                                            webViewVisibility = true;
-                                            showGoBack = false;
-                                            isLoggedIn = true;
-                                          });
-                                          webViewController.evaluateJavascript(source:
-                                              "setTimeout(function(){__doPostBack('btnExtend','');}, 1200000);");
-                                        } else {
-                                          webViewController.evaluateJavascript(source:
-                                              "document.getElementById('tridField').value = '$usertckn';");
-                                          webViewController.evaluateJavascript(source:
-                                              "document.getElementById('egpField').value = '$usereDevletPassword';");
-                                          setState(() {
-                                            webViewVisibility = true;
-                                          });
-                                        }
-                                        if (currentUrl == OBSLoginLink) {
-                                          appNavigator.currentState
-                                              ?.pushReplacementNamed("/login-justLoggedOut");
-                                        }
-                                      }
-                                    } else {
-                                      return;
-                                    }
-                                  },
-                                  onLoadStart: (controller, url){},
-                                  )),
-                                ],
-                        ),
+                  child: SizedBox(
+                      height: double.infinity,
+                      width: MediaQuery.of(context).size.width,
+                      child: InAppWebView(
+                        pullToRefreshController: refreshController,
+                        initialUrlRequest:
+                            URLRequest(url: WebUri(OBSLoginLink)),
+                        onWebViewCreated: (InAppWebViewController controller) {
+                          webViewController = controller;
+                        },
+                        onConsoleMessage: (controller, message) {
+                          String consoleMessage = message.message;
+                          if (kDebugMode) {
+                            print("console: $consoleMessage");
+                          }
+                          if (consoleMessage.contains(
+                              "cannot be parsed, or is out of range")) {
+                            setState(() {
+                              webViewVisibility = true;
+                            });
+                          }
+                          if (consoleMessage
+                              .contains("User just logged out.")) {
+                            OBSLogout();
+                          }
+                          if (consoleMessage.contains("Oturum Sonlandı")) {
+                            appNavigator.currentState
+                                ?.pushReplacementNamed("/login-justLoggedOut");
+                            setState(() {
+                              isLoggedIn = false;
+                              webViewVisibility = false;
+                            });
+                          }
+                        },
+                        onLoadStop: (controller, url) {
+                          refreshController!.endRefreshing();
+                          String currentUrl = url.toString();
+                          if (kDebugMode) {
+                            print(currentUrl);
+                          }
+
+                          webViewController.evaluateJavascript(
+                              source: "console.log(document.body.innerText);");
+                          if (mounted) {
+                            if (kDebugMode) {
+                              print(url);
+                            }
+                            if (loginSteps == 0 && currentUrl == OBSLoginLink) {
+                              webViewController.evaluateJavascript(
+                                  source:
+                                      "__doPostBack('btnEdevletLogin','');");
+                              if (kDebugMode) {
+                                print("LOGINSTEPS: $loginSteps");
+                              }
+                              setState(() {
+                                loginSteps++;
+                              });
+                            } else if (loginSteps <= 2 &&
+                                currentUrl
+                                    .contains("https://giris.turkiye.gov.tr")) {
+                              webViewController.evaluateJavascript(
+                                  source:
+                                      "document.getElementById('tridField').value = '$usertckn';");
+                              webViewController.evaluateJavascript(
+                                  source:
+                                      "document.getElementById('egpField').value = '$usereDevletPassword';");
+                              webViewController.evaluateJavascript(
+                                  source:
+                                      "document.getElementsByClassName('btn btn-send')[0].click();");
+                              webViewController.evaluateJavascript(
+                                  source:
+                                      "if(document.getElementsByClassName('alert error').length > 0){console.log('cannot be parsed, or is out of range')};");
+                              if (kDebugMode) {
+                                print("LOGINSTEPS: $loginSteps");
+                              }
+                              setState(() {
+                                loginSteps++;
+                              });
+                            } else {
+                              if (currentUrl
+                                  .contains("https://obs.yildiz.edu.tr/")) {
+                                setState(() {
+                                  webViewVisibility = true;
+                                  showGoBack = false;
+                                  isLoggedIn = true;
+                                });
+                                webViewController.evaluateJavascript(
+                                    source:
+                                        "setTimeout(function(){__doPostBack('btnExtend','');}, 1200000);");
+                              } else {
+                                webViewController.evaluateJavascript(
+                                    source:
+                                        "document.getElementById('tridField').value = '$usertckn';");
+                                webViewController.evaluateJavascript(
+                                    source:
+                                        "document.getElementById('egpField').value = '$usereDevletPassword';");
+                                setState(() {
+                                  webViewVisibility = true;
+                                });
+                              }
+                              if (currentUrl == OBSLoginLink) {
+                                appNavigator.currentState?.pushReplacementNamed(
+                                    "/login-justLoggedOut");
+                              }
+                            }
+                          } else {
+                            return;
+                          }
+                        },
+                        onLoadStart: (controller, url) {},
                       )),
                 ),
               ],

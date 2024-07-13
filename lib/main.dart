@@ -48,7 +48,7 @@ class YildizOBSMobil extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: skipSetup ? const LoginPage(justLoggedOut: false,) : const OnboardingPage(),
       theme: ThemeData(
-        textTheme: GoogleFonts.lexendTextTheme(Theme.of(context).textTheme),
+        textTheme: GoogleFonts.lexendTextTheme(Theme.of(context).textTheme).apply(bodyColor: Colors.white, displayColor: Colors.white),
         colorScheme: const ColorScheme(
           brightness: Brightness.dark,
           primary: Color(0xFFBAC3FF),
@@ -67,11 +67,9 @@ class YildizOBSMobil extends StatelessWidget {
           errorContainer: Color(0xFF93000A),
           onError: Color(0xFF690005),
           onErrorContainer: Color(0xFFFFDAD6),
-          background: Color(0xFF1B1B1F),
-          onBackground: Color(0xFFE4E1E6),
           surface: Color(0xFF1B1B1F),
           onSurface: Color(0xFFE4E1E6),
-          surfaceVariant: Color(0xFF46464F),
+          surfaceContainerHighest: Color(0xFF46464F),
           onSurfaceVariant: Color(0xFFC7C5D0),
           outline: Color(0xFF90909A),
           onInverseSurface: Color(0xFF1B1B1F),
