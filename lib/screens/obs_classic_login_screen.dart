@@ -200,11 +200,9 @@ class _ClassicLoginOBSPageState extends State<ClassicLoginOBSPage>
   }
 
   void OBSLogout() {
-    if (isLoggedIn) {
       webViewController.evaluateJavascript(
           source: "__doPostBack('btnLogout','');");
-    }
-    appNavigator.currentState?.popAndPushNamed("/login-justLoggedOut");
+      appNavigator.currentState?.popAndPushNamed("/login-justLoggedOut");
   }
 
   @override
@@ -431,7 +429,7 @@ class _ClassicLoginOBSPageState extends State<ClassicLoginOBSPage>
                               }
                               if (consoleMessage
                                   .contains("User just logged out.")) {
-                                OBSLogout();
+                                // OBSLogout();
                               }
                               if (consoleMessage.contains("Oturum Sonlandı")) {
                                 setState(() {
@@ -501,6 +499,7 @@ class _ClassicLoginOBSPageState extends State<ClassicLoginOBSPage>
 
                                 setState(() {
                                   isLoggedIn = true;
+                                  loginSteps = 1;
                                 });
                               }
                             },

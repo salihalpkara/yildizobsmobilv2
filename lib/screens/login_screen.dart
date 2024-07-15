@@ -134,50 +134,53 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
     return SafeArea(
       top: false,
       child: Scaffold(
-        body: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(child: Image.asset("assets/images/logo.png"),
-            height: MediaQuery.of(context).size.height/3,),
-            Text(
-              "Yıldız OBS Mobil'e\nHoş Geldin!",
-              textAlign: TextAlign.center,
-              style: GoogleFonts.lexend(fontSize: 40),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                showLoginButton||widget.justLoggedOut ? Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    FilledButton.icon(
-                        style: FilledButton.styleFrom(backgroundColor: Color.fromRGBO(0, 74, 153, 100), side: BorderSide(width: 2, color: Colors.white)),
-                        onPressed:(){
-                      setState(() {
-                        showLoginButton = false;
-                      });
-                      _fetchEnabledAuth();
-                    }, icon:const Icon(Icons.login, color: Colors.white,),
-                    label:const Text("Giriş yap", style: TextStyle(color: Colors.white),)),
-                    OutlinedButton.icon(style: OutlinedButton.styleFrom(side:  BorderSide(width: 1.6, color: Color.fromRGBO(51, 149, 255, 100))),onPressed: (){appNavigator.currentState?.pushNamed("/setup");}, icon: const Icon(Icons.settings, color: Colors.white), label: const Text("Ayarlar", style: TextStyle(color: Colors.white),))
-                  ],
-                ):  const Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Doğrulama yapılıyor..."),
-                    SizedBox(width: 10,),
-                    CircularProgressIndicator(),
-                  ],
-                ),
-              ],
-            )
-          ],
+        body: DecoratedBox(
+          decoration: const BoxDecoration(image: DecorationImage(fit:BoxFit.cover,image: AssetImage("assets/images/login-page-background2.png"))),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(child: Image.asset("assets/images/logo.png"),
+              height: MediaQuery.of(context).size.height/3,),
+              Text(
+                "Yıldız OBS Mobil'e\nHoş Geldin!",
+                textAlign: TextAlign.center,
+                style: GoogleFonts.lexend(fontSize: 40),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  showLoginButton||widget.justLoggedOut ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FilledButton.icon(
+                          style: FilledButton.styleFrom(backgroundColor: Color.fromRGBO(0, 74, 153, 100), side: BorderSide(width: 2, color: Colors.white)),
+                          onPressed:(){
+                        setState(() {
+                          showLoginButton = false;
+                        });
+                        _fetchEnabledAuth();
+                      }, icon:const Icon(Icons.login, color: Colors.white,),
+                      label:const Text("Giriş yap", style: TextStyle(color: Colors.white),)),
+                      OutlinedButton.icon(style: OutlinedButton.styleFrom(side:  BorderSide(width: 1.6, color: Color.fromRGBO(51, 149, 255, 100))),onPressed: (){appNavigator.currentState?.pushNamed("/setup");}, icon: const Icon(Icons.settings, color: Colors.white), label: const Text("Ayarlar", style: TextStyle(color: Colors.white),))
+                    ],
+                  ):  const Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Doğrulama yapılıyor..."),
+                      SizedBox(width: 10,),
+                      CircularProgressIndicator(),
+                    ],
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

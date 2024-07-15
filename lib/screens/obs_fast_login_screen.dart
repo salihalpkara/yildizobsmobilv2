@@ -286,7 +286,7 @@ class _FastLoginOBSPageState extends State<FastLoginOBSPage> {
                           }
                           if (consoleMessage
                               .contains("User just logged out.")) {
-                            OBSLogout();
+                            // OBSLogout();
                           }
                           if (consoleMessage.contains("Oturum Sonlandı")) {
                             appNavigator.currentState
