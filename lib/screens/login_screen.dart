@@ -15,13 +15,7 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
-
-
-
-
-
-
-class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
+class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   late final LocalAuthentication auth;
   bool isLocalAuthSupported = false;
   bool showLoginButton = true;
@@ -29,35 +23,32 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
   ConnectivityResult? connection;
   bool userPrefersFastLogin = true;
 
-
-
   Future<void> _fetchEnabledAuth() async {
     isAuthEnabled = await UserPreferences.getEnableAuth();
 
     auth.isDeviceSupported().then((bool isSupported) {
       setState(() {
-          isLocalAuthSupported = isSupported;
-          if (isLocalAuthSupported) {
-            if (isAuthEnabled) {
-              _authenticate();
-            }else {
-              if (userPrefersFastLogin) {
-                appNavigator.currentState?.pushReplacementNamed("/obs-fast");
-              } else {
-                appNavigator.currentState?.pushReplacementNamed("/obs-classic");
-              }
-            }
-          }else {
-            UserPreferences.setEnableAuth(false);
+        isLocalAuthSupported = isSupported;
+        if (isLocalAuthSupported) {
+          if (isAuthEnabled) {
+            _authenticate();
+          } else {
             if (userPrefersFastLogin) {
               appNavigator.currentState?.pushReplacementNamed("/obs-fast");
             } else {
               appNavigator.currentState?.pushReplacementNamed("/obs-classic");
             }
           }
-        });
+        } else {
+          UserPreferences.setEnableAuth(false);
+          if (userPrefersFastLogin) {
+            appNavigator.currentState?.pushReplacementNamed("/obs-fast");
+          } else {
+            appNavigator.currentState?.pushReplacementNamed("/obs-classic");
+          }
+        }
+      });
     });
-
   }
 
   Future<void> checkNetworkConnection() async {
@@ -67,7 +58,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
     });
   }
 
-  Future<void> checkFastLoginEnabled () async {
+  Future<void> checkFastLoginEnabled() async {
     final bool prefersFastLogin = await UserPreferences.getPrefersFastLogin();
     setState(() {
       userPrefersFastLogin = prefersFastLogin;
@@ -87,26 +78,25 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
   }
 
   Future<void> _authenticate() async {
-
     setState(() {
       showLoginButton = false;
     });
 
-    if(isAuthEnabled) {
+    if (isAuthEnabled) {
       try {
         bool authenticated = await auth.authenticate(
             localizedReason: "Giriş yapmak için kimliğinizi doğrulayın",
             options: const AuthenticationOptions(
                 stickyAuth: true,
                 biometricOnly: false,
-                sensitiveTransaction: false));
+                sensitiveTransaction: true));
         if (authenticated) {
           if (userPrefersFastLogin) {
             appNavigator.currentState?.pushReplacementNamed("/obs-fast");
           } else {
             appNavigator.currentState?.pushReplacementNamed("/obs-classic");
           }
-        }else{
+        } else {
           setState(() {
             showLoginButton = true;
           });
@@ -115,7 +105,8 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
         if (kDebugMode) {
           print(e);
         }
-      }} else {
+      }
+    } else {
       if (userPrefersFastLogin) {
         appNavigator.currentState?.pushReplacementNamed("/obs-fast");
       } else {
@@ -124,63 +115,90 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
     }
   }
 
-
-
-
-
   @override
   Widget build(BuildContext context) {
-
     return SafeArea(
       top: false,
+      bottom: false,
       child: Scaffold(
-        body: DecoratedBox(
-          decoration: const BoxDecoration(image: DecorationImage(fit:BoxFit.cover,image: AssetImage("assets/images/login-page-background2.png"))),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(child: Image.asset("assets/images/logo.png"),
-              height: MediaQuery.of(context).size.height/3,),
-              Text(
-                "Yıldız OBS Mobil'e\nHoş Geldin!",
-                textAlign: TextAlign.center,
-                style: GoogleFonts.lexend(fontSize: 40),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  showLoginButton||widget.justLoggedOut ? Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      FilledButton.icon(
-                          style: FilledButton.styleFrom(backgroundColor: Color.fromRGBO(0, 74, 153, 100), side: BorderSide(width: 2, color: Colors.white)),
-                          onPressed:(){
-                        setState(() {
-                          showLoginButton = false;
-                        });
-                        _fetchEnabledAuth();
-                      }, icon:const Icon(Icons.login, color: Colors.white,),
-                      label:const Text("Giriş yap", style: TextStyle(color: Colors.white),)),
-                      OutlinedButton.icon(style: OutlinedButton.styleFrom(side:  BorderSide(width: 1.6, color: Color.fromRGBO(51, 149, 255, 100))),onPressed: (){appNavigator.currentState?.pushNamed("/setup");}, icon: const Icon(Icons.settings, color: Colors.white), label: const Text("Ayarlar", style: TextStyle(color: Colors.white),))
-                    ],
-                  ):  const Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Doğrulama yapılıyor..."),
-                      SizedBox(width: 10,),
-                      CircularProgressIndicator(),
-                    ],
-                  ),
-                ],
-              )
-            ],
-          ),
+        backgroundColor: Color(0XFF121e2d),
+        body: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              child: Image.asset("assets/images/logo.png"),
+              height: MediaQuery.of(context).size.height / 3,
+            ),
+            Text(
+              "Yıldız OBS Mobil'e\nHoş Geldin!",
+              textAlign: TextAlign.center,
+              style: GoogleFonts.lexend(fontSize: 40),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                showLoginButton || widget.justLoggedOut
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          FilledButton.icon(
+                              style: FilledButton.styleFrom(
+                                  backgroundColor:
+                                      Color.fromRGBO(0, 74, 153, 1),
+                                  side: BorderSide(
+                                      width: 2, color: Colors.white)),
+                              onPressed: () {
+                                setState(() {
+                                  showLoginButton = false;
+                                });
+                                _fetchEnabledAuth();
+                              },
+                              icon: const Icon(
+                                Icons.login,
+                                color: Colors.white,
+                              ),
+                              label: const Text(
+                                "Giriş yap",
+                                style: TextStyle(color: Colors.white),
+                              )),
+                          FilledButton.icon(
+                              style: FilledButton.styleFrom(
+                                backgroundColor: Color(0XFFae946e),
+                                  side: BorderSide(
+                                      width: 2,
+                                      color:
+                                          Colors.white)),
+                              onPressed: () {
+                                appNavigator.currentState
+                                    ?.pushNamed("/setup");
+                              },
+                              icon: const Icon(Icons.settings,
+                                  color: Colors.white),
+                              label: const Text(
+                                "Ayarlar",
+                                style: TextStyle(color: Colors.white),
+                              ))
+                        ],
+                      )
+                    : const Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Doğrulama yapılıyor..."),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          CircularProgressIndicator(),
+                        ],
+                      ),
+              ],
+            )
+          ],
         ),
       ),
     );

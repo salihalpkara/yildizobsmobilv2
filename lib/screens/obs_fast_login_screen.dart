@@ -68,7 +68,7 @@ class _FastLoginOBSPageState extends State<FastLoginOBSPage> {
   void OBSLogout() {
     webViewController.evaluateJavascript(
         source: "__doPostBack('btnLogout','');");
-    appNavigator.currentState?.pushReplacementNamed("/login-justLoggedOut");
+    // appNavigator.currentState?.pushReplacementNamed("/login-justLoggedOut");
   }
 
   @override
@@ -100,8 +100,10 @@ class _FastLoginOBSPageState extends State<FastLoginOBSPage> {
           }
         },
         child: Scaffold(
+          backgroundColor: Color(0XFF121e2d),
           appBar: connection == ConnectivityResult.none
               ? AppBar(
+              backgroundColor: Color(0XFF121e2d),
                   leading: IconButton(
                     onPressed: () {
                       appNavigator.currentState

@@ -266,8 +266,10 @@ class _ClassicLoginOBSPageState extends State<ClassicLoginOBSPage>
           // }
         },
         child: Scaffold(
+          backgroundColor: Color(0XFF121e2d),
           appBar: connection == ConnectivityResult.none || !isLoggedIn
               ? AppBar(
+            backgroundColor: Color(0XFF121e2d),
                   leading: IconButton(
                     onPressed: () {
                       appNavigator.currentState
@@ -510,7 +512,7 @@ class _ClassicLoginOBSPageState extends State<ClassicLoginOBSPage>
                             child: Container(
                               height: obsSecCodeHeight,
                               width: MediaQuery.of(context).size.width,
-                              color: Theme.of(context).colorScheme.background,
+                              color: Color(0XFF121e2d),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,

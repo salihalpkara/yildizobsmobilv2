@@ -1,4 +1,3 @@
-import 'package:animated_background/animated_background.dart';
 import "package:flutter/material.dart";
 import 'package:yildiz_obs_mobile/main.dart';
 
@@ -16,14 +15,13 @@ class _OnboardingPageState extends State<OnboardingPage> with TickerProviderStat
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AnimatedBackground(
-        vsync: this,
-        behaviour: SpaceBehaviour(),
+      backgroundColor: Color(0XFF121e2d),
+      body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset("assets/images/logo.png"),
+            Image.asset("assets/images/logo.png", height: MediaQuery.of(context).size.height/3,),
             const Text(
               "Yıldız OBS Mobil'e Hoş Geldin!",
               textAlign: TextAlign.center,
@@ -36,7 +34,10 @@ class _OnboardingPageState extends State<OnboardingPage> with TickerProviderStat
             const SizedBox(
               height: 20,
             ),
-            OutlinedButton(
+            FilledButton(
+              style: FilledButton.styleFrom(
+                backgroundColor: Colors.white
+              ),
               onPressed: () {
                 appNavigator.currentState?.pushNamed("/setup");
               },
