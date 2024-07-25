@@ -2,28 +2,24 @@
 
 ## EN
 
-This application is the improved version of my previous project [Yıldız OBS Mobile](https://github.com/salihalpkara/yildizobsmobil/). Yildiz OBS Mobile v2 provides a one-click-login experience for both E-Government and OBS login methods.
+This application is the enhanced version of my previous project, [Yıldız OBS Mobile](https://github.com/salihalpkara/yildizobsmobil/). Yıldız OBS Mobile v2 offers a seamless one-click-login experience for both E-Government and OBS login methods.
 
-During the onboarding setup screen, the application prompts the student to select their preferred login method (E-Government login or OBS login). Subsequently, the application requests the necessary information based on the chosen login method. Once the required information which will be stored locally on the student's device is provided, they can opt to set up biometric authentication, adding an extra layer of protection. Consequently, the app will require biometric authentication for every login attempt.
+During the onboarding setup screen, the app prompts students to choose their preferred login method (either E-Government or OBS). After selecting a method, the app collects the necessary information, which is then stored securely on the student’s device. Users also have the option to enable biometric authentication for added security. Once biometric authentication is set up, it will be required for every login attempt.
 
-Upon completion of the setup process, the student is ready to experience one-click-login. The application automatically logs in to OBS using the preferred method upon launch.
+After completing the setup, students can enjoy the convenience of one-click-login. The app automatically logs them into OBS using their chosen method as soon as it is launched.
 
-I have already successfully implemented the E-Government login functionality in the previous version. In this version, I have optimized the function calls to eliminate the need for users to click the login button separately.
+In this version, I have optimized the E-Government login process to remove the need for users to click a separate login button. Additionally, I have introduced the one-click-login feature for the OBS login option, which was not possible in the previous version due to challenges with automatically solving security questions. This time, I successfully addressed this issue by utilizing the Google ML Kit package.
 
-Additionally, I have implemented the one-click-login feature for the OBS login option. This was not applicable in the previous version due to the inability to automatically solve the security question. However, in this version, I have managed to overcome this challenge by using the Google ML Kit package.
-
-Through this project, I learned how to utilize the Google ML Kit package and had the opportunity to experiment with and learn about the various functions of the InAppWebView package. Additionally, I learned how to design an initial setup screen for my application and guide users through the interface to efficiently utilize my application.
+Through this project, I have gained experience with the Google ML Kit package, explored various functions of the InAppWebView package, and learned how to implement local biometric authentication to secure the app. I also designed an initial setup screen to guide users through an efficient setup process.
 
 ## TR
 
-Bu uygulama, önceki projem [Yıldız OBS Mobil](https://github.com/salihalpkara/yildizobsmobil/)'in geliştirilmiş versiyonudur. Yıldız OBS Mobil v2, E-Devlet ve OBS giriş yöntemleri için tek tıklamayla giriş deneyimi sunar.
+Bu uygulama, önceki projem [Yıldız OBS Mobil](https://github.com/salihalpkara/yildizobsmobil/)'in geliştirilmiş versiyonudur.Yıldız OBS Mobile v2, hem E-Devlet hem de OBS bilgileri ile giriş yöntemleri için tek tıklama ile giriş deneyimi sunar.
 
-Öğrenci, kurulum ekranında tercih ettiği giriş yöntemini (E-Devlet girişi veya OBS girişi) seçmek için yönlendirilir. Ardından, uygulama seçilen giriş yöntemine göre gerekli bilgileri alır. Kullanıcının cihazında yerel olarak saklanacak olan bu gerekli bilgiler sağlandıktan sonra, öğrenciye ek bir koruma katmanı eklemek için biyometrik kimlik doğrulaması kurma seçeneği sunulur. Böylelikle, uygulama her girişte biyometrik kimlik doğrulaması yapmayı gerektirir.
+Başlangıç kurulum ekranında uygulama, öğrencilerden tercih ettikleri giriş yöntemini seçmelerini ister (E-Devlet bilgileri ile giriş veya OBS bilgileri ile giriş). Bir yöntem seçildikten sonra, uygulama gerekli bilgileri toplar ve bu bilgileri öğrencinin cihazında güvenli bir şekilde saklar. Kullanıcılar ayrıca ek güvenlik için biyometrik kimlik doğrulamasını etkinleştirme seçeneğine sahiptir. Biyometrik kimlik doğrulama kurulduğunda, her giriş denemesi için bu kimlik doğrulaması yapılması gerekecektir.
 
-Kurulum süreci tamamlandığında, kullanıcı tek tıklamayla giriş deneyimini yaşamaya hazırdır. Uygulama, başlatıldığında tercih edilen yöntemi kullanarak OBS'ye otomatik olarak giriş yapar.
+Kurulum tamamlandığında, öğrenciler tek tıklama ile girişin rahatlığını deneyimleyebilir. Uygulama, açıldığı zaman otomatik olarak seçilen yöntemle OBS’ye giriş yapar.
 
-Önceki versiyonda E-Devlet girişi işlevselliğini başarıyla uygulamıştım. Bu versiyonda, kullanıcıların ayrıca giriş düğmesine tıklama ihtiyacını ortadan kaldırmak için fonksiyon çağrılarını optimize ettim.
+Bu versiyonda, E-Devlet bilgileri ile giriş işlemini optimize ederek kullanıcıların ayrı bir giriş düğmesine tıklamalarını ortadan kaldırdım. Ayrıca, önceki versiyonda güvenlik sorularını otomatik olarak çözememem sebebiyle mümkün olmayan tek tıklama ile giriş özelliğini bu sürümde getirmeyi başardım. Bu sorunu, güvenlik sorularını Google ML Kit paketi ile çözmeyi başararak kullanarak başarılı bir şekilde ortadan kaldırdım.
 
-Ayrıca, OBS giriş seçeneği için tek tıklamayla giriş özelliğini uyguladım. Bu önceki versiyonda güvenlik sorusunu otomatik olarak çözemediğim için mümkün değildi. Ancak bu versiyonda, bu sorunu Google ML Kit paketini kullanarak çözmeyi başardım.
-
-Bu proje sayesinde Google ML Kit paketini kullanmayı öğrendim ve InAppWebView paketinin farklı fonksiyonlarını deneme ve öğrenme imkanını elde ettim. Bunlara ek olarak uygulamam için bir başlangıç kurulum ekranı tasarlamayı ve kullanıcıları uygulamamı verimli bir şekilde kullanabilmeleri için arayüz aracılığıyla yönlendirmeyi öğrendim.
+Bu proje sayesinde Google ML Kit paketini kullanma deneyimi edindim. InAppWebView paketinin farklı fonksiyonlarını keşfettim ve uygulamayı güvence altına almak için yerel biyometrik kimlik doğrulama yöntemlerini nasıl uygulayacağımı öğrendim. Ayrıca, uygulamam için bir başlangıç kurulum ekranı tasarlamayı ve kullanıcıları, uygulamamı verimli bir şekilde kullanabilmeleri için arayüz aracılığıyla yönlendirmeyi öğrendim.
