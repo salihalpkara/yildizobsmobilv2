@@ -190,7 +190,7 @@ class _ClassicLoginOBSPageState extends State<ClassicLoginOBSPage>
     }
     if (kDebugMode) {
       print(
-          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\naaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n$scannedText");
+          "SCANNED TEXT: $scannedText");
     }
     if (kDebugMode) {
       print(secCodeAnswer);
@@ -240,36 +240,12 @@ class _ClassicLoginOBSPageState extends State<ClassicLoginOBSPage>
             });
             return false;
           }
-          // if (await controller.canGoBack()) {
-          //   controller.goBack();
-          //   return false;
-          // } else {
-          //   final difference = DateTime.now().difference(timeBackPressed);
-          //   final isExitWarning = difference >= const Duration(seconds: 3);
-          //   timeBackPressed = DateTime.now();
-          //
-          //   if (isExitWarning) {
-          //     Fluttertoast.showToast(
-          //         msg: "Çıkış yapmak için tekrar basın",
-          //         toastLength: Toast.LENGTH_SHORT,
-          //         gravity: ToastGravity.BOTTOM,
-          //         timeInSecForIosWeb: 3,
-          //         backgroundColor: Colors.grey[700]?.withAlpha(220),
-          //         textColor: Colors.white,
-          //         fontSize: 15.0);
-          //     return false;
-          //   } else {
-          //     OBSLogout();
-          //     return false;
-          //   }
-          //
-          // }
         },
         child: Scaffold(
-          backgroundColor: Color(0XFF121e2d),
+          backgroundColor: const Color(0XFF121e2d),
           appBar: connection == ConnectivityResult.none || !isLoggedIn
               ? AppBar(
-            backgroundColor: Color(0XFF121e2d),
+            backgroundColor: const Color(0XFF121e2d),
                   leading: IconButton(
                     onPressed: () {
                       appNavigator.currentState
@@ -284,7 +260,7 @@ class _ClassicLoginOBSPageState extends State<ClassicLoginOBSPage>
             visible: isLoggedIn,
             child: NavigationBarTheme(
               data: NavigationBarThemeData(
-                  backgroundColor: Color(0xFF121e2d),
+                  backgroundColor: const Color(0xFF121e2d),
                   labelTextStyle: WidgetStateProperty.all<TextStyle>(
                       Theme.of(context).textTheme.labelMedium!)),
               child: NavigationBar(
@@ -512,7 +488,7 @@ class _ClassicLoginOBSPageState extends State<ClassicLoginOBSPage>
                             child: Container(
                               height: obsSecCodeHeight,
                               width: MediaQuery.of(context).size.width,
-                              color: Color(0XFF121e2d),
+                              color: const Color(0XFF121e2d),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,

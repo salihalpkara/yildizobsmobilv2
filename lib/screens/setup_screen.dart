@@ -94,10 +94,10 @@ class _SetupPageState extends State<SetupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF121e2d),
+      backgroundColor: const Color(0xFF121e2d),
       appBar: skipSetup
           ? AppBar(
-        backgroundColor: Color(0XFF121e2d),
+        backgroundColor: const Color(0XFF121e2d),
               title: const Text("Ayarlar"),
         automaticallyImplyLeading: false,
         leading: IconButton(icon: const Icon(Icons.arrow_back_rounded), onPressed: (){TercihiKaydetveDevamEt();BilgileriKaydetveDevamEt();KurulumuTamamla();},),
@@ -140,11 +140,11 @@ class _SetupPageState extends State<SetupPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     OutlinedButton(
-                      style: OutlinedButton.styleFrom(side: BorderSide(width: 2, color: Color(0xFFBAC3FF))),
+                      style: OutlinedButton.styleFrom(side: const BorderSide(width: 2, color: Color(0xFFBAC3FF))),
                         onPressed: (){setState(() {
                             currentStep--;
                           });},
-                        child: Text("Geri")),
+                        child: const Text("Geri")),
                     FilledButton(
                         onPressed: BilgileriKaydetveDevamEt,
                         child: const Row(
@@ -161,11 +161,11 @@ class _SetupPageState extends State<SetupPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     OutlinedButton(
-                        style: OutlinedButton.styleFrom(side: BorderSide(width: 2, color: Color(0xFFBAC3FF))),
+                        style: OutlinedButton.styleFrom(side: const BorderSide(width: 2, color: Color(0xFFBAC3FF))),
                         onPressed: (){setState(() {
                           currentStep--;
                         });},
-                        child: Text("Geri")),
+                        child: const Text("Geri")),
                     FilledButton(
                         onPressed: KurulumuTamamla,
                         child: const Row(

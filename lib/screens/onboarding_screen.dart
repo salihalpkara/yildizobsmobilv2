@@ -15,7 +15,7 @@ class _OnboardingPageState extends State<OnboardingPage> with TickerProviderStat
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0XFF121e2d),
+      backgroundColor: const Color(0XFF121e2d),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.max,

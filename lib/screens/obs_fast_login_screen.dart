@@ -100,10 +100,10 @@ class _FastLoginOBSPageState extends State<FastLoginOBSPage> {
           }
         },
         child: Scaffold(
-          backgroundColor: Color(0XFF121e2d),
+          backgroundColor: const Color(0XFF121e2d),
           appBar: connection == ConnectivityResult.none
               ? AppBar(
-              backgroundColor: Color(0XFF121e2d),
+              backgroundColor: const Color(0XFF121e2d),
                   leading: IconButton(
                     onPressed: () {
                       appNavigator.currentState
@@ -118,7 +118,7 @@ class _FastLoginOBSPageState extends State<FastLoginOBSPage> {
             visible: isLoggedIn,
             child: NavigationBarTheme(
               data: NavigationBarThemeData(
-                  backgroundColor: Color(0xFF121e2d),
+                  backgroundColor: const Color(0xFF121e2d),
                   labelTextStyle: WidgetStateProperty.all<TextStyle>(
                       Theme.of(context).textTheme.labelMedium!)),
               child: NavigationBar(

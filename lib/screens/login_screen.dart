@@ -121,14 +121,14 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
       top: false,
       bottom: false,
       child: Scaffold(
-        backgroundColor: Color(0XFF121e2d),
+        backgroundColor: const Color(0XFF121e2d),
         body: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              child: Image.asset("assets/images/logo.png"),
               height: MediaQuery.of(context).size.height / 3,
+              child: Image.asset("assets/images/logo.png"),
             ),
             Text(
               "Yıldız OBS Mobil'e\nHoş Geldin!",
@@ -149,8 +149,8 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                           FilledButton.icon(
                               style: FilledButton.styleFrom(
                                   backgroundColor:
-                                      Color.fromRGBO(0, 74, 153, 1),
-                                  side: BorderSide(
+                                      const Color.fromRGBO(0, 74, 153, 1),
+                                  side: const BorderSide(
                                       width: 2, color: Colors.white)),
                               onPressed: () {
                                 setState(() {
@@ -168,8 +168,8 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                               )),
                           FilledButton.icon(
                               style: FilledButton.styleFrom(
-                                backgroundColor: Color(0XFFae946e),
-                                  side: BorderSide(
+                                backgroundColor: const Color(0XFFae946e),
+                                  side: const BorderSide(
                                       width: 2,
                                       color:
                                           Colors.white)),
