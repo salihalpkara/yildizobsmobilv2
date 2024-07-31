@@ -36,13 +36,13 @@ class YildizOBSMobil extends StatelessWidget {
       builder: FToastBuilder(),
       navigatorKey: appNavigator,
       routes: {
-        "/login":(context) => LoginPage(justLoggedOut: false),
-        "/login-justLoggedOut":(context) => LoginPage(justLoggedOut: true),
-        "/onboarding":(context) => OnboardingPage(),
-        "/setup":(context) => SetupPage(loggedIn: false),
-        "/setup-loggedIn":(context) => SetupPage(loggedIn: true),
-        "/obs-fast":(context) => FastLoginOBSPage(),
-        "/obs-classic":(context) => ClassicLoginOBSPage()
+        "/login":(context) => const LoginPage(justLoggedOut: false),
+        "/login-justLoggedOut":(context) => const LoginPage(justLoggedOut: true),
+        "/onboarding":(context) => const OnboardingPage(),
+        "/setup":(context) => const SetupPage(loggedIn: false),
+        "/setup-loggedIn":(context) => const SetupPage(loggedIn: true),
+        "/obs-fast":(context) => const FastLoginOBSPage(),
+        "/obs-classic":(context) => const ClassicLoginOBSPage()
       },
       title: 'Yıldız OBS Mobil',
       debugShowCheckedModeBanner: false,
