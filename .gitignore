@@ -46,3 +46,4 @@ app.*.map.json
 /git-filter-repo.py
 /passwords.txt
 /bfg-1.14.0.jar
+/android/gradle.properties
