@@ -18,12 +18,11 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   late final LocalAuthentication auth;
   bool isLocalAuthSupported = false;
-  bool showLoginButton = true;
   bool isAuthEnabled = false;
   ConnectivityResult? connection;
   bool userPrefersFastLogin = true;
 
-  Future<void> _fetchEnabledAuth() async {
+  Future<void> _fetchEnabledAuth(bool setup) async {
     isAuthEnabled = await UserPreferences.getEnableAuth();
 
     auth.isDeviceSupported().then((bool isSupported) {
@@ -31,20 +30,28 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
         isLocalAuthSupported = isSupported;
         if (isLocalAuthSupported) {
           if (isAuthEnabled) {
-            _authenticate();
+            _authenticate(setup);
+          } else {
+            if (setup) {
+              appNavigator.currentState?.pushReplacementNamed("/setup");
+            } else {
+              if (userPrefersFastLogin) {
+                appNavigator.currentState?.pushReplacementNamed("/obs-fast");
+              } else {
+                appNavigator.currentState?.pushReplacementNamed("/obs-classic");
+              }
+            }
+          }
+        } else {
+          UserPreferences.setEnableAuth(false);
+          if (setup) {
+            appNavigator.currentState?.pushReplacementNamed("/setup");
           } else {
             if (userPrefersFastLogin) {
               appNavigator.currentState?.pushReplacementNamed("/obs-fast");
             } else {
               appNavigator.currentState?.pushReplacementNamed("/obs-classic");
             }
-          }
-        } else {
-          UserPreferences.setEnableAuth(false);
-          if (userPrefersFastLogin) {
-            appNavigator.currentState?.pushReplacementNamed("/obs-fast");
-          } else {
-            appNavigator.currentState?.pushReplacementNamed("/obs-classic");
           }
         }
       });
@@ -72,16 +79,12 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
     auth = LocalAuthentication();
 
     if (!widget.justLoggedOut) {
-      _fetchEnabledAuth();
+      _fetchEnabledAuth(false);
     }
     super.initState();
   }
 
-  Future<void> _authenticate() async {
-    setState(() {
-      showLoginButton = false;
-    });
-
+  Future<void> _authenticate(bool setup) async {
     if (isAuthEnabled) {
       try {
         bool authenticated = await auth.authenticate(
@@ -91,15 +94,15 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                 biometricOnly: false,
                 sensitiveTransaction: true));
         if (authenticated) {
-          if (userPrefersFastLogin) {
-            appNavigator.currentState?.pushReplacementNamed("/obs-fast");
+          if (setup) {
+            appNavigator.currentState?.pushReplacementNamed("/setup");
           } else {
-            appNavigator.currentState?.pushReplacementNamed("/obs-classic");
+            if (userPrefersFastLogin) {
+              appNavigator.currentState?.pushReplacementNamed("/obs-fast");
+            } else {
+              appNavigator.currentState?.pushReplacementNamed("/obs-classic");
+            }
           }
-        } else {
-          setState(() {
-            showLoginButton = true;
-          });
         }
       } on PlatformException catch (e) {
         if (kDebugMode) {
@@ -107,10 +110,14 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
         }
       }
     } else {
-      if (userPrefersFastLogin) {
-        appNavigator.currentState?.pushReplacementNamed("/obs-fast");
+      if (setup) {
+        appNavigator.currentState?.pushReplacementNamed("/setup");
       } else {
-        appNavigator.currentState?.pushReplacementNamed("/obs-classic");
+        if (userPrefersFastLogin) {
+          appNavigator.currentState?.pushReplacementNamed("/obs-fast");
+        } else {
+          appNavigator.currentState?.pushReplacementNamed("/obs-classic");
+        }
       }
     }
   }
@@ -141,9 +148,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
             Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                showLoginButton || widget.justLoggedOut
-                    ? Column(
+              children: [Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           FilledButton.icon(
@@ -153,10 +158,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                   side: const BorderSide(
                                       width: 2, color: Colors.white)),
                               onPressed: () {
-                                setState(() {
-                                  showLoginButton = false;
-                                });
-                                _fetchEnabledAuth();
+                                _fetchEnabledAuth(false);
                               },
                               icon: const Icon(
                                 Icons.login,
@@ -168,14 +170,11 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                               )),
                           FilledButton.icon(
                               style: FilledButton.styleFrom(
-                                backgroundColor: const Color(0XFFae946e),
+                                  backgroundColor: const Color(0XFFae946e),
                                   side: const BorderSide(
-                                      width: 2,
-                                      color:
-                                          Colors.white)),
+                                      width: 2, color: Colors.white)),
                               onPressed: () {
-                                appNavigator.currentState
-                                    ?.pushNamed("/setup");
+                                _fetchEnabledAuth(true);
                               },
                               icon: const Icon(Icons.settings,
                                   color: Colors.white),
@@ -185,17 +184,6 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                               ))
                         ],
                       )
-                    : const Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Doğrulama yapılıyor..."),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          CircularProgressIndicator(),
-                        ],
-                      ),
               ],
             )
           ],
