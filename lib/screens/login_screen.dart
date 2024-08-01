@@ -85,7 +85,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   Future<void> _authenticate(bool setup) async {
     if (isAuthEnabled) {
       bool authenticated = await auth.authenticate(
-          localizedReason: "Giriş yapmak için kimliğinizi doğrulayın",
+          localizedReason: "",
           options: const AuthenticationOptions(
               stickyAuth: true,
               biometricOnly: false,
