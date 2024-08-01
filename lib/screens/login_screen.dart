@@ -1,7 +1,5 @@
 import "package:connectivity_plus/connectivity_plus.dart";
-import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
-import "package:flutter/services.dart";
 import "package:local_auth/local_auth.dart";
 import "package:yildiz_obs_mobile/main.dart";
 import "../services/user_preferences.dart";
@@ -86,27 +84,21 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
 
   Future<void> _authenticate(bool setup) async {
     if (isAuthEnabled) {
-      try {
-        bool authenticated = await auth.authenticate(
-            localizedReason: "Giriş yapmak için kimliğinizi doğrulayın",
-            options: const AuthenticationOptions(
-                stickyAuth: true,
-                biometricOnly: false,
-                sensitiveTransaction: true));
-        if (authenticated) {
-          if (setup) {
-            appNavigator.currentState?.pushReplacementNamed("/setup");
+      bool authenticated = await auth.authenticate(
+          localizedReason: "Giriş yapmak için kimliğinizi doğrulayın",
+          options: const AuthenticationOptions(
+              stickyAuth: true,
+              biometricOnly: false,
+              sensitiveTransaction: true));
+      if (authenticated) {
+        if (setup) {
+          appNavigator.currentState?.pushReplacementNamed("/setup");
+        } else {
+          if (userPrefersFastLogin) {
+            appNavigator.currentState?.pushReplacementNamed("/obs-fast");
           } else {
-            if (userPrefersFastLogin) {
-              appNavigator.currentState?.pushReplacementNamed("/obs-fast");
-            } else {
-              appNavigator.currentState?.pushReplacementNamed("/obs-classic");
-            }
+            appNavigator.currentState?.pushReplacementNamed("/obs-classic");
           }
-        }
-      } on PlatformException catch (e) {
-        if (kDebugMode) {
-          print(e);
         }
       }
     } else {
@@ -148,42 +140,42 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
             Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          FilledButton.icon(
-                              style: FilledButton.styleFrom(
-                                  backgroundColor:
-                                      const Color.fromRGBO(0, 74, 153, 1),
-                                  side: const BorderSide(
-                                      width: 2, color: Colors.white)),
-                              onPressed: () {
-                                _fetchEnabledAuth(false);
-                              },
-                              icon: const Icon(
-                                Icons.login,
-                                color: Colors.white,
-                              ),
-                              label: const Text(
-                                "Giriş yap",
-                                style: TextStyle(color: Colors.white),
-                              )),
-                          FilledButton.icon(
-                              style: FilledButton.styleFrom(
-                                  backgroundColor: const Color(0XFFae946e),
-                                  side: const BorderSide(
-                                      width: 2, color: Colors.white)),
-                              onPressed: () {
-                                _fetchEnabledAuth(true);
-                              },
-                              icon: const Icon(Icons.settings,
-                                  color: Colors.white),
-                              label: const Text(
-                                "Ayarlar",
-                                style: TextStyle(color: Colors.white),
-                              ))
-                        ],
-                      )
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    FilledButton.icon(
+                        style: FilledButton.styleFrom(
+                            backgroundColor:
+                                const Color.fromRGBO(0, 74, 153, 1),
+                            side: const BorderSide(
+                                width: 2, color: Colors.white)),
+                        onPressed: () {
+                          _fetchEnabledAuth(false);
+                        },
+                        icon: const Icon(
+                          Icons.login,
+                          color: Colors.white,
+                        ),
+                        label: const Text(
+                          "Giriş yap",
+                          style: TextStyle(color: Colors.white),
+                        )),
+                    FilledButton.icon(
+                        style: FilledButton.styleFrom(
+                            backgroundColor: const Color(0XFFae946e),
+                            side: const BorderSide(
+                                width: 2, color: Colors.white)),
+                        onPressed: () {
+                          _fetchEnabledAuth(true);
+                        },
+                        icon: const Icon(Icons.settings, color: Colors.white),
+                        label: const Text(
+                          "Ayarlar",
+                          style: TextStyle(color: Colors.white),
+                        ))
+                  ],
+                )
               ],
             )
           ],

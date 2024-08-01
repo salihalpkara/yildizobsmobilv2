@@ -1,6 +1,5 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'dart:async';
 import 'package:get/get.dart';
 import 'package:image/image.dart' as img;
 import 'package:flutter/foundation.dart';
@@ -35,14 +34,12 @@ class _ClassicLoginOBSPageState extends State<ClassicLoginOBSPage>
   int secCodeAnswer = 0;
   bool webViewVisibility = false;
   bool isLoggedIn = false;
-  bool showGoBack = false;
   int loginSteps = 0;
   int navBarSelectedIndex = 2;
   double obsSecCodeHeight = 40;
   double obsSecCodeWidth = 177;
   double loginProgress = 0.0;
   bool userPrefersFastLogin = false;
-  late Timer timer;
   late Uint8List screenshotBytes;
   PullToRefreshController? refreshController;
 
@@ -78,26 +75,16 @@ class _ClassicLoginOBSPageState extends State<ClassicLoginOBSPage>
   Future<void> increaseContrastAndSave(String imagePath) async {
     // Read image file
     File imageFile = File(imagePath);
-    if (!imageFile.existsSync()) {
-      if (kDebugMode) {
-        print('Image file not found');
-      }
-      return;
-    }
+
 
     // Read image bytes
     Uint8List imageBytes = await imageFile.readAsBytes();
     // Decode image
     img.Image? image = img.decodeImage(imageBytes);
-    if (image == null) {
-      if (kDebugMode) {
-        print('Error decoding image');
-      }
-      return;
-    }
+
 
     // Increase contrast
-    image = img.gaussianBlur(image, radius: 3);
+    image = img.gaussianBlur(image!, radius: 3);
     image = img.contrast(image,
         contrast: 250); // Example: Increasing contrast by 50%
     image = img.gaussianBlur(image, radius: 3);
@@ -106,9 +93,6 @@ class _ClassicLoginOBSPageState extends State<ClassicLoginOBSPage>
     // Save image
     File(imagePath).writeAsBytesSync(img.encodePng(image));
 
-    if (kDebugMode) {
-      print('Contrast increased and image saved successfully');
-    }
   }
 
   void getRecognizedText(File image) async {
@@ -117,9 +101,6 @@ class _ClassicLoginOBSPageState extends State<ClassicLoginOBSPage>
     });
     final dir = (await getTemporaryDirectory()).path;
     increaseContrastAndSave("$dir/a.png");
-    if (kDebugMode) {
-      print("DIR: $dir");
-    }
     final inputImage = InputImage.fromFilePath(image.path);
     final textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
     RecognizedText recognizedText =
@@ -154,9 +135,6 @@ class _ClassicLoginOBSPageState extends State<ClassicLoginOBSPage>
 
     if (secCode.length == 4) {
       secCode = secCode.substring(0, 2) + secCode.substring(3);
-      if (kDebugMode) {
-        print("attempting login");
-      }
       secCodeAnswer =
           int.parse(secCode.substring(0, 2)) + int.parse(secCode.substring(2));
       webViewController.evaluateJavascript(
@@ -165,9 +143,6 @@ class _ClassicLoginOBSPageState extends State<ClassicLoginOBSPage>
       webViewController.evaluateJavascript(
           source: "document.getElementById('btnLogin').click();");
     } else if (secCode.length == 3) {
-      if (kDebugMode) {
-        print("attempting login");
-      }
       secCodeAnswer =
           int.parse(secCode.substring(0, 2)) + int.parse(secCode.substring(2));
       webViewController.evaluateJavascript(
@@ -178,23 +153,10 @@ class _ClassicLoginOBSPageState extends State<ClassicLoginOBSPage>
     } else {
       webViewController.evaluateJavascript(
           source: 'document.querySelector("#btnRefresh").click();');
-
-      if (kDebugMode) {
-        print("Retrying: $secCode");
-      }
     }
 
     setState(() {});
-    if (kDebugMode) {
-      print(dir);
-    }
-    if (kDebugMode) {
-      print(
-          "SCANNED TEXT: $scannedText");
-    }
-    if (kDebugMode) {
-      print(secCodeAnswer);
-    }
+
     secCodeAnswer = 0;
     secCode = "";
   }
@@ -370,9 +332,6 @@ class _ClassicLoginOBSPageState extends State<ClassicLoginOBSPage>
                             },
                             onConsoleMessage: (controller, message) {
                               String consoleMessage = message.message;
-                              if (kDebugMode) {
-                                print("console: $consoleMessage");
-                              }
                               if (consoleMessage.contains(
                                   "cannot be parsed, or is out of range")) {
                                 setState(() {
@@ -435,10 +394,6 @@ class _ClassicLoginOBSPageState extends State<ClassicLoginOBSPage>
                                   webViewController.evaluateJavascript(
                                       source:
                                           'document.querySelector("#btnRefresh").click();');
-                                } else {
-                                  if (kDebugMode) {
-                                    print(sonuc);
-                                  }
                                 }
 
                                 webViewController.evaluateJavascript(

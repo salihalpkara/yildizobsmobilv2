@@ -1,6 +1,5 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:yildiz_obs_mobile/services/user_preferences.dart';
@@ -18,8 +17,6 @@ class _FastLoginOBSPageState extends State<FastLoginOBSPage> {
   late InAppWebViewController webViewController;
   late String usertckn = "";
   late String usereDevletPassword = "";
-  late String userOBSUsername = "";
-  late String userOBSPassword = "";
   ConnectivityResult? connection;
   DateTime timeBackPressed = DateTime.now();
   String OBSLoginLink = "https://obs.yildiz.edu.tr/oibs/std/login.aspx";
@@ -277,9 +274,6 @@ class _FastLoginOBSPageState extends State<FastLoginOBSPage> {
                         },
                         onConsoleMessage: (controller, message) {
                           String consoleMessage = message.message;
-                          if (kDebugMode) {
-                            print("console: $consoleMessage");
-                          }
                           if (consoleMessage.contains(
                               "cannot be parsed, or is out of range")) {
                             setState(() {
@@ -302,23 +296,13 @@ class _FastLoginOBSPageState extends State<FastLoginOBSPage> {
                         onLoadStop: (controller, url) {
                           refreshController!.endRefreshing();
                           String currentUrl = url.toString();
-                          if (kDebugMode) {
-                            print(currentUrl);
-                          }
-
                           webViewController.evaluateJavascript(
                               source: "console.log(document.body.innerText);");
                           if (mounted) {
-                            if (kDebugMode) {
-                              print(url);
-                            }
                             if (loginSteps == 0 && currentUrl == OBSLoginLink) {
                               webViewController.evaluateJavascript(
                                   source:
                                       "__doPostBack('btnEdevletLogin','');");
-                              if (kDebugMode) {
-                                print("LOGINSTEPS: $loginSteps");
-                              }
                               setState(() {
                                 loginSteps++;
                               });
@@ -337,9 +321,6 @@ class _FastLoginOBSPageState extends State<FastLoginOBSPage> {
                               webViewController.evaluateJavascript(
                                   source:
                                       "if(document.getElementsByClassName('alert error').length > 0){console.log('cannot be parsed, or is out of range')};");
-                              if (kDebugMode) {
-                                print("LOGINSTEPS: $loginSteps");
-                              }
                               setState(() {
                                 loginSteps++;
                               });
