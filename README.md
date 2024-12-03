@@ -30,7 +30,8 @@ Bu proje sayesinde Google ML Kit paketini kullanma deneyimi edindim. InAppWebVie
   <img src="https://github.com/user-attachments/assets/67875bad-cbf3-4f94-ba07-804e75344c20" style="width: 20%">
   <img src="https://github.com/user-attachments/assets/4342a348-4758-45b5-accc-f749583b9048" style="width: 20%">
   <img src="https://github.com/user-attachments/assets/c37bec6b-e20c-4c62-bbd2-020bc1c51484" style="width: 20%">
-  <img src="https://github.com/user-attachments/assets/2213e6db-9e6e-4fa4-8190-d51c40d8cc2c" style="width: 20%">
+  <img src="https://github.com/user-attachments/assets/bc5e7757-dbea-4e08-b5db-7d35f6799458" style="width: 20%">
   <img src="https://github.com/user-attachments/assets/b422ede7-d06f-401f-94a3-39328317bbe7" style="width: 20%">
   <img src="https://github.com/user-attachments/assets/e336e33a-b390-4f6f-a574-a6d5ab76b18e" style="width:20%">
 </div>
+
