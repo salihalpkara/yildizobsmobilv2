@@ -16,7 +16,7 @@ Through this project, I have gained experience with the Google ML Kit package, e
 
 Bu uygulama, önceki projem [Yıldız OBS Mobil](https://github.com/salihalpkara/yildizobsmobil/)'in geliştirilmiş versiyonudur. Yıldız OBS Mobile v2, hem E-Devlet hem de OBS bilgileri ile giriş yöntemleri için tek tıklama ile giriş deneyimi sunar.
 
-Başlangıç kurulum ekranında uygulama, öğrencilerden tercih ettikleri giriş yöntemini seçmelerini ister (E-Devlet bilgileri ile giriş veya OBS bilgileri ile giriş). Bir yöntem seçildikten sonra, uygulama gerekli bilgileri toplar ve bu bilgileri öğrencinin cihazında güvenli bir şekilde saklar. Kullanıcılar ayrıca ek güvenlik için biyometrik kimlik doğrulamasını etkinleştirme seçeneğine sahiptir. Biyometrik kimlik doğrulama kurulduğunda, her giriş denemesi için bu kimlik doğrulaması yapılması gerekecektir.
+Başlangıç kurulum ekranında uygulama, öğrencilerden tercih ettikleri giriş yöntemini seçmelerini ister (E-Devlet bilgileri ile giriş veya OBS bilgileri ile giriş). Bir yöntem seçildikten sonra, uygulama gerekli bilgileri toplar ve bu bilgileri öğrencinin cihazında güvenli bir şekilde saklar. Kullanıcılar ayrıca ek güvenlik için biyometrik kimlik doğrulamasını etkinleştirme seçeneğine sahiptir. Biyometrik kimlik doğrulama kurulduğunda her giriş denemesi için bu kimlik doğrulaması yapılması gerekecektir.
 
 Kurulum tamamlandığında, öğrenciler tek tıklama ile girişin rahatlığını deneyimleyebilir. Uygulama, açıldığı zaman otomatik olarak seçilen yöntemle OBS’ye giriş yapar.
 
