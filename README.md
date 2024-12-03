@@ -23,3 +23,14 @@ Kurulum tamamlandığında, öğrenciler tek tıklama ile girişin rahatlığın
 Bu versiyonda, E-Devlet bilgileri ile giriş işlemini optimize ederek kullanıcıların ayrı bir giriş düğmesine tıklamalarını ortadan kaldırdım. Ayrıca, önceki versiyonda güvenlik sorularını otomatik olarak çözememem sebebiyle mümkün olmayan tek tıklama ile giriş özelliğini bu sürümde getirmeyi başardım. Bu sorunu, güvenlik sorularını Google ML Kit paketi ile çözmeyi başararak kullanarak başarılı bir şekilde ortadan kaldırdım.
 
 Bu proje sayesinde Google ML Kit paketini kullanma deneyimi edindim. InAppWebView paketinin farklı fonksiyonlarını keşfettim ve uygulamayı güvence altına almak için yerel biyometrik kimlik doğrulama yöntemlerini nasıl uygulayacağımı öğrendim. Ayrıca, uygulamam için bir başlangıç kurulum ekranı tasarlamayı ve kullanıcıları, uygulamamı verimli bir şekilde kullanabilmeleri için arayüz aracılığıyla yönlendirmeyi öğrendim.
+
+<div style="display:flex; flex-direction: row; justify-content: center; align-items: center;">
+  <img src="https://github.com/user-attachments/assets/335ad29e-afe2-41db-8286-b18f0e4cddfe" style="width: 20%">
+  <img src="https://github.com/user-attachments/assets/a6d7604e-39d0-458a-bbdc-35c224bd23cf" style="width: 20%">
+  <img src="https://github.com/user-attachments/assets/d96c0e11-4588-4a69-bf7e-00eceff94ed1" style="width: 20%">
+  <img src="https://github.com/user-attachments/assets/4342a348-4758-45b5-accc-f749583b9048" style="width: 20%">
+  <img src="https://github.com/user-attachments/assets/c37bec6b-e20c-4c62-bbd2-020bc1c51484" style="width: 20%">
+  <img src="https://github.com/user-attachments/assets/2213e6db-9e6e-4fa4-8190-d51c40d8cc2c" style="width: 20%">
+  <img src="https://github.com/user-attachments/assets/b422ede7-d06f-401f-94a3-39328317bbe7" style="width: 20%">
+  <img src="https://github.com/user-attachments/assets/e336e33a-b390-4f6f-a574-a6d5ab76b18e" style="width:20%">
+</div>
