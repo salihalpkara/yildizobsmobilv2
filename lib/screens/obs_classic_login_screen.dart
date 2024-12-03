@@ -236,13 +236,25 @@ class _ClassicLoginOBSPageState extends State<ClassicLoginOBSPage>
                     case 0:
                       webViewController.evaluateJavascript(
                           source:
-                              "menu_close(this,'start.aspx?gkm=00233219833291388643775636606311143523032194333453444836720385043439638936355703756034388388243330337427341963524535260');");
+                          '''let buttons = document.querySelectorAll("a.nav-link");
+                          for (let button of buttons) {
+                        if (button.textContent == "Gelen Mesajlar") {
+                          button.click();
+                          break;
+                        }
+                      }''');
 
                       break;
                     case 1:
                       webViewController.evaluateJavascript(
                           source:
-                              "menu_close(this,'start.aspx?gkm=00233219833291388643775636606311143523032194333453444836720385043439638936355703756034388388243330337427341963524035280');");
+                          '''let buttons = document.querySelectorAll("a.nav-link");
+                          for (let button of buttons) {
+                        if (button.textContent == "Ders Programı") {
+                          button.click();
+                          break;
+                        }
+                      }''');
                       break;
                     case 2:
                       webViewController.evaluateJavascript(
@@ -251,7 +263,13 @@ class _ClassicLoginOBSPageState extends State<ClassicLoginOBSPage>
                     case 3:
                       webViewController.evaluateJavascript(
                           source:
-                              "menu_close(this,'start.aspx?gkm=00233219833291388643775636606311143523032194333453444836720385043439638936355703756034388388243330337427341963524035275');");
+                          '''let buttons = document.querySelectorAll("a.nav-link");
+                          for (let button of buttons) {
+                        if (button.textContent == "Not Listesi") {
+                          button.click();
+                          break;
+                        }
+                      }''');
                       break;
                     case 4:
                       Navigator.pushNamed(context, "/setup-loggedIn");
